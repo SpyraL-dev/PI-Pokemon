@@ -2,6 +2,7 @@
  import {useDispatch,useSelector} from 'react-redux'
  import style from './style.module.css'
  import { Link } from 'react-router-dom'
+ import axios from 'axios'
  import {getByName,filter,orderBy,setFilter,getByType, getPokemon, getCreateds, reloadHome} from '../../redux/actions/actions'
  const Navbar= function(){
     const pokemones= useSelector(state=>state.pokemon)
@@ -61,10 +62,27 @@
         if(value.state){
         value.opcion?dispatch(filter(value.toggleB,array)):dispatch(orderBy(array,value.toggleC,value.toggle))
         }
-    },[value,array])
+    },[value,array]);
+
+    const CreatedPokemons =({e})=>{
+      axios.get(`http://localhost:3001/creados`) 
+      .then((res) => {
+          if(res.data.length === 0) alert("No se encontraron perros creados")
+          else {
+          dispatch({
+              type: "ADD_CREATEDS",
+              payload: res.data,
+          })           
+          }
+      })
+      .catch((error) => {
+          console.log(error);
+          alert("No se encontró el perro")
+      });
+  }
 
     
-    return <div className={style.container}> 
+    return <div class="topnav"> 
     <form id='form' className={style.form} onSubmit={(e) => { handleSubmit(e) }}>
     <Link to='/Api/Pokemon//Search'>
         <input
@@ -73,18 +91,18 @@
           value={val.v}
           onChange={e => handleChange(e)}
         />
+        </Link>
+    <Link to='/Api/Pokemon//Search'>
+      <button type="submit" value="Buscar" onClick={handleSubmit} >Buscar</button>
       </Link>
-      <input type="submit" value="Buscar"  ></input>
-    </form>< Link to='/Api/Pokemones'>
-    <button name="tipo" onClick={e => {  handleClick(6) }}>{val.estado ? 'Tipo' : 'Nombre'}</button></Link>
+    </form>
     <div className={style.form} > 
       <button name="state" onClick={e => { handleClick(4) }}>{value.state ? 'ON' : 'OFF'}</button>
-      <button disabled={!value.state} name="toggle" onClick={e => { handleClick(1) }}>{value.toggle ? 'Nombre' : 'Fuerza'}</button>
-      
-      <button disabled={!value.state} name="toggleC" onClick={e => { handleClick(3) }}>{value.toggleC ? 'Descendiente' :'Ascendente' }</button>
-      
+      <button disabled={!value.state} name="toggle" onClick={e => { handleClick(1) }}>{value.toggle ? 'Nombre' : 'Fuerza'}</button>      
+      <button disabled={!value.state} name="toggleC" onClick={e => { handleClick(3) }}>{value.toggleC ? 'Descendiente' :'Ascendente' }</button>      
       <button disabled={!value.state} name="opcion" onClick={e => { handleClick(5) }}>{value.opcion ? 'ON' :'OFF'}</button>
-      
+      <button disabled={!value.state&&!value.opcion} name="toggleB" onClick={e => { handleClick(2) }}>{value.toggleB ? 'Creados' : 'Existentes'}</button>
+
       < Link to='/Api/Pokemones'><button onClick={()=>dispatch(reloadHome(12))}>Home</button></Link>
       <Link to='/pokemon/Agregar'><button >Agregar</button> </Link>
     </div>

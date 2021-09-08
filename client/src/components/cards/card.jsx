@@ -13,11 +13,14 @@ function Main({pokemon}) {
    return <div>{Object.values( pokemon).length!==0 && <div className={style.container} id={pokemon.id} >
       <Link to={`/Api/pokemon/${pokemon.nombre}`}><button className={style.button} onClick={() => handleClick()}>More</button ></Link>
    
-      <img className={style.img} src={pokemon.img} alt={pokemon.name} />  
+      <img className={style.img} src={pokemon.img} alt={pokemon.name} /> 
+      <div> 
       <h3>{pokemon.nombre}</h3>
+      <h5>Fuerza:{pokemon.fuerza} </h5>
       <h5  >Tipo:{pokemon.tipo&&pokemon.tipo.map((t,index)=>{
         return pokemon.tipo.length-1!==index ? ' '+ t+ ', ':' '+ t
       })}</h5>
+      </div>
    </div>}</div>
 }
 

@@ -24,16 +24,22 @@ const Form =function(){
     const onChange=(e)=>{
          setValue(()=>{return{...value,[e.target.name]:e.target.value}})
     }
-    const enviar = ()=>{
+    const enviar = async ()=>{
+    const result = await axios.get("http://localhost:3001/creados")
+    if(result){
+        const re2 = result.data.filter((el) => el.Nombre === value.Nombre)
+        if(re2)throw alert("Ya existe un pokemon con ese nombre")
+        //if(re2) throw alert("Ya existe un Pokemon con ese nombre")
+    }
     axios.post("http://localhost:3001/pokemon/NewPokemon", {value})
     .then((res)=>{console.log(res)})
     .then((res) => {
         console.log(res)          
-        alert("Perro creado")
+        alert("Pokemon Creado")
      })
      .catch((error) => {
          console.log(error)
-         alert("No se pudo crear el perro")
+         alert("No se pudo crear el pokemon")
  });
     }
     const handleSubmit=(e)=>{

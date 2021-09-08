@@ -101,11 +101,26 @@ return async function (dispatch){
 }
 }
 export const reloadHome= function(paso){
+    if(paso === "creados"){
+        return async(dispatch )=>{
+            const result= await axios.get(`http://localhost:3001/creados`)
+            dispatch({type:ADD_CREATEDS, payload:result.data })
+    }
+}
+    if(paso === "api"){
+        const num = 12
+        const inicio=num-12
+    return async(dispatch )=>{
+         const result= await axios.get(`http://localhost:3001/pokemon/All?inicio=${inicio}&paso=${num}`)
+         dispatch({type:ADD_CREATEDS, payload:result.data })
+     } 
+    }else{
     const inicio=paso-12
     return async(dispatch )=>{
          const result= await axios.get(`http://localhost:3001/pokemon/All?inicio=${inicio}&paso=${paso}`)
          dispatch({type:ADD_CREATEDS, payload:result.data })
-     } 
+     }
+    } 
  }
 
 
