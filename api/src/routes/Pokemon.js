@@ -1,26 +1,35 @@
+
 const { Router } = require('express');
-// Importar todos los routers;
-// Ejemplo: const authRouter = require('./auth.js');
-const { Pokemon } = require('../db');
+const controlerPokemon = require('./class/pokemon')
 const router = Router();
-const axios = require("axios")
+const {Pokemon} = require("../db")
 
 
-router.get("/" , async (req, res)=>{
-    let dbPokemon = await Pokemon.findAll()
-    let dbPokemonParse = []    
-    for (let i = 0; i < dbPokemon.length; i++) {
-        let foundpokemon = dbPokemon[i];
-        foundpokemon = foundpokemon.dataValues;
-        dbPokemonParse.push(foundpokemon)
-    }
-  axios.get("https://pokeapi.co/api/v2/pokemon") 
-    .then(respuesta => {  
-        dbPokemonParse= [...dbPokemonParse, ...respuesta.data.results]
-         res.send(dbPokemonParse)
-    })
-    .catch(error => {
-        console.log(error)
-    })
-})
-module.exports = router;
+router.get('/All',controlerPokemon.getAll)
+router.post('/',controlerPokemon.postPokemon)
+router.get('/:id',controlerPokemon.getById)
+router.get('/',controlerPokemon.getByName)
+router.post("/NewPokemon", (req, res) => {
+    const { Nombre, Vida, Fuerza, Defensa, Velocidad, Altura, Peso, Imagen } =req.body.value;
+    const Tipos = req.body.value.Tipos;   
+    const creados = Pokemon.findAll()
+    Pokemon.create({
+          Nombre,
+          Vida,
+          Fuerza,
+          Defensa,
+          Velocidad,
+          Altura,
+          Peso,
+          Imagen,
+          Tipos,
+      })
+      .then(doneTemp=>{
+          console.log(creados)
+      return res.status(200).json(doneTemp)
+  })
+  .catch(error=>{ res.send(error)})
+    
+  });
+ 
+module.exports = router

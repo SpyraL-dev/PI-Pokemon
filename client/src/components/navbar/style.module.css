@@ -1,0 +1,10 @@
+.container{
+display:inline;
+margin: 10px;
+padding:5px;
+
+}
+.form{
+    margin-right: 5px;
+    display:inline;
+}

@@ -1,15 +1,19 @@
 const { Router } = require('express');
-// Importar todos los routers;
-// Ejemplo: const authRouter = require('./auth.js');
-const pokemonroutes = require("../routes/Pokemon")
-const typesroutes = require("../routes/Types")
+const routespokemon = require('./pokemon')
+const routestype = require('./type')
+const {Pokemon} = require("../db")
 
-const routes = Router();
+const router = Router();
+router.use('/pokemon',routespokemon)
+router.use('/type',routestype)
+router.get("/creados", async (req,res)=>{
+  try { const Creados = await Pokemon.findAll()
+    res.send(Creados)
+}
+    catch(error){
+        res.send(error)
+    }
+})
 
-// Configurar los routers
-// Ejemplo: router.use('/auth', authRouter);
-routes.use("/Pokemon" , pokemonroutes)
-routes.use("/Types" , typesroutes)
 
-
-module.exports = routes;
+module.exports = router;

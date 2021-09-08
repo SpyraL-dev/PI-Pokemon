@@ -1,0 +1,40 @@
+.padre{
+    display:grid;
+    grid-template-columns:auto auto auto;
+    grid-template-rows: auto auto auto;
+    justify-content: space-around;
+    align-content: space-around;
+}
+.container{
+    position: relative;
+    display:grid;
+    padding:10px;
+    margin:10px;
+    min-width: 150px;
+   min-height: 200px;
+   max-width: 150px;
+   max-height: 200px;
+    background-color: lightblue;
+    /* grid-template-columns: auto ;
+    grid-template-rows: auto ; */
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.2);
+transition:0.3s
+}
+.img{
+     top: 5px;;
+     right:5px;
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    overflow: hidden;
+    border-radius: 50%;
+}
+.button{
+   
+     top:0;
+     right:0;
+}
+.container:hover{
+    transform:scale(1.05,1.05);
+    }
+
