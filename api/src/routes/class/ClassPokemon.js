@@ -7,46 +7,7 @@ const { Type } = require("../../db");
 class Models {
   constructor(modelo) {
     this.model = modelo;
-  }
- 
-  
-  postPokemon = async (req, res, next) => {
-    const { nombre, vida, fuerza, defensa, velocidad, altura, peso, imagen } =req.body;
-    const tipo = req.body.tipo;
-    console.log(req.body)
-    
-    if(!await this.model.findOne({where:{ Nombre:nombre}})){
-    const [result,status] = await this.model
-      .Create({
-        
-          Nombre: nombre,
-          Vida: vida,
-          Fuerza: fuerza,
-          Defensa: defensa,
-          Velocidad: velocidad,
-          Altura: altura,
-          Peso: peso,
-          Imagen: imagen,
-        
-      }).catch((error) => next(error));
-    tipo.forEach(async (tip) => {
-      const valor = await Type.findOne({ where: { Nombre: tip } });
-      !!valor && !!result && result.addType(valor);
-    });
-
-    const result2= await this.model.findByPk(result.Id,{include: { model: Type }})
-    const send = {
-      nombre: result2.Nombre,
-      id: result2.Id,
-      img: result2.Imagen,
-      fuerza:result2.Fuerza,
-      tipo: result2.types.map(tipo=>tipo.Nombre)
-    };
-    status?res.send(send).status(200):res.sendStatus(500);}else res.sendStatus(500)
-      
-    
-  };
-     
+  }   
   getAll = async (req, res, next) => {
     const value= parseInt(req.query.paso,10)+1
     const inicio= parseInt(req.query.inicio,10)+1

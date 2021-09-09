@@ -26,18 +26,14 @@ function App() {
     <div className="App">
       <Switch>
       <Router>
-       <Route exact path="/"> <Landing/></Route>     
-      <Route  path="/"> <Navbar/></Route>
-      <Route exact path="/Api/Pokemones">
-       <Pagination />
-      </Route>
+      <Route exact path="/" component={Landing}/>     
+      <Route  path="/" component={Navbar}/>
+      <Route exact path="/Api/Pokemones" component={Pagination}/>
       <Route exact path="/Api/Pokemon//Search"><Main pokemon={pokemonSearch}/></Route> 
       <Route exact path="/Pokemon/Agregar" component={Form}>
        <Form/>
       </Route>
-      <Route exact path="/Api/Pokemon/:pokemon">
-       <CardDetail/>
-      </Route>
+      <Route exact path="/Api/Pokemon/:pokemon" component={CardDetail}/>
       </Router>
       </Switch>
     </div>

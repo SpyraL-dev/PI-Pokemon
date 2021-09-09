@@ -25,11 +25,14 @@ const Form =function(){
          setValue(()=>{return{...value,[e.target.name]:e.target.value}})
     }
     const enviar = async ()=>{
-    const result = await axios.get("http://localhost:3001/creados")
-    if(result){
-        const re2 = result.data.filter((el) => el.Nombre === value.Nombre)
-        if(re2)throw alert("Ya existe un pokemon con ese nombre")
-        //if(re2) throw alert("Ya existe un Pokemon con ese nombre")
+    const resultdb = await axios.get("http://localhost:3001/creados")
+    if(resultdb){
+        const re2 = resultdb.data.filter((el) => el.Nombre === value.Nombre)
+        if(re2.length>0){throw alert("Ya existe un pokemon con ese nombre")}
+    }else{
+     const resultapi = await axios.get(`https://pokeapi.co/api/v2/pokemon?offset=0&limit=48`)
+     const reapi = resultapi.data.filter((el) => el.name === value.Nombre)
+     if(reapi.length>0){throw alert("Ya existe un pokemon con ese nombre")}
     }
     axios.post("http://localhost:3001/pokemon/NewPokemon", {value})
     .then((res)=>{console.log(res)})

@@ -5,6 +5,7 @@ const Landing = function(){
 
     return<div className={style.page}>
         <div className={style.container}>
+            <h1>Bienvenido</h1>
             <Link to='/Api/Pokemones'><button className={style.button} >HOME</button></Link>
         </div>
     </div>

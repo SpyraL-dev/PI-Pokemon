@@ -8,7 +8,6 @@ const { default: axios } = require('axios');
 
 
 router.get('/All',controlerPokemon.getAll)
-router.post('/',controlerPokemon.postPokemon)
 router.get('/:id',controlerPokemon.getById)
 router.get('/',controlerPokemon.getByName)
 router.post("/NewPokemon", (req, res) => {
